@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,10 +24,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Register extends AppCompatActivity {
 
-    EditText firstNameTxt, lastNameTxt, emailTxt, passwordTxt, phoneNumTxt;
+    EditText  emailTxt, passwordTxt;
     Button registerBtn;
     TextView loginBtn;
-    FirebaseAuth authenticate;
+    FirebaseAuth firebaseAuth;
     ProgressBar progressBar;
 
     @Override
@@ -34,20 +35,18 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        firstNameTxt = findViewById(R.id.firstName);
-        lastNameTxt = findViewById(R.id.lastName);
         passwordTxt = findViewById(R.id.password);
         emailTxt = findViewById(R.id.email);
-        phoneNumTxt = findViewById(R.id.phoneNumber);
         registerBtn = findViewById(R.id.registerButton);
         loginBtn = findViewById(R.id.loginButton);
 
-        authenticate = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar);
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String email = emailTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
 
@@ -63,18 +62,34 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
+                hideKeyboard();
                 progressBar.setVisibility(View.VISIBLE);
 
-                authenticate.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())
                         {
                             progressBar.setVisibility(View.INVISIBLE);
-                            Toast msg = Toast.makeText(Register.this, "User Created", Toast.LENGTH_SHORT);
-                            msg.setGravity(Gravity.CENTER, 0 ,0 );
-                            msg.show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful())
+                                    {
+                                        Toast msg = Toast.makeText(Register.this, "Registered successfully. Please check your email for verification", Toast.LENGTH_SHORT);
+                                        msg.setGravity(Gravity.CENTER, 0 ,0 );
+                                        msg.show();
+                                        emailTxt.setText("");
+                                        passwordTxt.setText("");
+                                    }
+                                    else
+                                    {
+                                        Toast msg = Toast.makeText(Register.this, "Error! " + task.getException().getMessage(), Toast.LENGTH_SHORT);
+                                        msg.setGravity(Gravity.CENTER, 0 ,0 );
+                                        msg.show();
+                                    }
+                                }
+                            });
                         }
                         else
                         {
@@ -94,5 +109,14 @@ public class Register extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });
+    }
+
+    public void hideKeyboard()
+    {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

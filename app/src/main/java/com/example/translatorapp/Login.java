@@ -3,11 +3,14 @@ package com.example.translatorapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -40,8 +43,10 @@ public class Login extends AppCompatActivity {
         registerBtn = findViewById(R.id.registerButton);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
                 String email = emailTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
 
@@ -57,6 +62,7 @@ public class Login extends AppCompatActivity {
                     return;
                 }
 
+                hideKeyboard();
                 progressBar.setVisibility(View.VISIBLE);
 
                 authenticate.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -65,7 +71,17 @@ public class Login extends AppCompatActivity {
                         if(task.isSuccessful())
                         {
                             progressBar.setVisibility(View.INVISIBLE);
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                            if(authenticate.getCurrentUser().isEmailVerified())
+                            {
+                                startActivity(new Intent(Login.this, MainActivity.class));
+                            }
+                            else
+                            {
+                                Toast msg = Toast.makeText(Login.this, "Please verify your email address" , Toast.LENGTH_SHORT);
+                                msg.setGravity(Gravity.CENTER, 0 ,0 );
+                                msg.show();
+                            }
                         }
                         else
                         {
@@ -85,5 +101,14 @@ public class Login extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Register.class));
             }
         });
+    }
+
+    public void hideKeyboard()
+    {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

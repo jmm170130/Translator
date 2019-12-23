@@ -10,49 +10,19 @@
         android:id="@+id/activityName"
         android:layout_width="230dp"
         android:layout_height="40dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="125dp"
         android:text="Create New Acount"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.558"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/firstName"
-        android:layout_width="280dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityName" />
-
-    <EditText
-        android:id="@+id/lastName"
-        android:layout_width="280dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Last Name"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstName" />
 
     <EditText
         android:id="@+id/email"
         android:layout_width="280dp"
         android:layout_height="51dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
@@ -62,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastName" />
+        app:layout_constraintTop_toBottomOf="@+id/activityName" />
 
     <EditText
         android:id="@+id/password"
@@ -79,30 +49,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
-    <EditText
-        android:id="@+id/phoneNumber"
-        android:layout_width="280dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Phone Number"
-        android:inputType="textPhonetic"
-        android:padding="10dp"
-        android:textColor="#000"
-        android:textColorHint="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
-
     <Button
         android:id="@+id/registerButton"
         android:layout_width="324dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
         android:text="Register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <TextView
         android:id="@+id/loginButton"
@@ -119,13 +74,14 @@
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
-        android:layout_width="113dp"
-        android:layout_height="114dp"
+        android:layout_width="112dp"
+        android:layout_height="100dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.51" />
+        app:layout_constraintVertical_bias="0.822" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
