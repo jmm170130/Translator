@@ -26,7 +26,7 @@ public class Login extends AppCompatActivity {
 
     EditText emailTxt, passwordTxt;
     Button loginBtn;
-    TextView registerBtn;
+    TextView registerBtn, resetPasswordBtn;
     ProgressBar progressBar;
     FirebaseAuth authenticate;
 
@@ -41,6 +41,7 @@ public class Login extends AppCompatActivity {
         authenticate = FirebaseAuth.getInstance();
         loginBtn = findViewById(R.id.loginButton);
         registerBtn = findViewById(R.id.registerButton);
+        resetPasswordBtn = findViewById(R.id.resetPasswordButton);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -62,7 +63,6 @@ public class Login extends AppCompatActivity {
                     return;
                 }
 
-                hideKeyboard();
                 progressBar.setVisibility(View.VISIBLE);
 
                 authenticate.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -95,20 +95,19 @@ public class Login extends AppCompatActivity {
             }
         });
 
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Register.class));
             }
         });
-    }
 
-    public void hideKeyboard()
-    {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        resetPasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, ResetPassword.class));
+            }
+        });
     }
 }
