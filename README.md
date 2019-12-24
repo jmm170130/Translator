@@ -9,3 +9,6 @@ To sign in the user must go to the login page and enter his account information.
 
 # Reset Password
 The Log in page has a link that takes the user to the reset password page. The user is asked to enter the account email and a reset link in sent to the given email. Once the user resets the account password he or she can log in to the account with the updated credentials.
+
+# Remember me
+The log in page has a check box that when checked allows the user to bypass the log in screen. The user will be remembered until manually logging out of the application.
