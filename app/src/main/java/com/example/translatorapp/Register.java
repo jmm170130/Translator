@@ -45,6 +45,7 @@ public class Register extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar);
 
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
