@@ -64,6 +64,11 @@ public class Register extends AppCompatActivity {
                     passwordTxt.setError("Password is required.");
                     return;
                 }
+                else if( password.length() < 8 )
+                {
+                    passwordTxt.setError("Password must be 8 or more characters.");
+                    return;
+                }
 
                 progressBar.setVisibility(View.VISIBLE);
 
